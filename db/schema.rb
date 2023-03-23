@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_11_012757) do
+ActiveRecord::Schema.define(version: 2023_03_11_010252) do
 
   create_table "categories", force: :cascade do |t|
-    t.string "task"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "task_manager"
-    t.boolean "completed"
+    t.string "name"
+    t.boolean "completed", default: false
+    t.integer "category_id"
+    t.index ["category_id"], name: "index_tasks_on_category_id"
   end
 
 end

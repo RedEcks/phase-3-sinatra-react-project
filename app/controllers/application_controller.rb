@@ -3,15 +3,17 @@ class ApplicationController < Sinatra::Base
   
   # Add your routes here
   get "/" do
-    Category.find_or_create_by(task:'cook dinner').to_json
+    category = Category.all
+    category.to_json
   end
 
-  post '/category' do
-    category = Category.create(task:params[:task])
-    category.to_json 
+  post '/task' do
+    category = Category.find_or_create_by(name:params["Category"])
+    task=Task.create(name: params["Task"], category:category)
+    Task.all.to_json
   end
 
-  patch '/category/:id' do
+  patch '/task/:id' do
     category = Category.find(params[:id])
     category.update(
       task: params[:task]
@@ -19,7 +21,7 @@ class ApplicationController < Sinatra::Base
     category.to_json
   end
 
-  delete '/category/:id' do
+  delete '/task/:id' do
     category = Category.find(params[:id])
     category.destroy
     category.to_json
